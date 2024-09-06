@@ -1,0 +1,32 @@
+specVersion: 1.0.0
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: MainEngine
+    network: sepolia
+    source:
+      address: "0x29fAA6186690f04F69f764306D8529A9dd147151"
+      abi: MainEngine
+      startBlock: 6643589
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - AdditionalTokenData
+        - OwnershipTransferred
+        - TokenUpdate
+      abis:
+        - name: MainEngine
+          file: ./abis/MainEngine.json
+      eventHandlers:
+        - event: AdditionalTokenData(indexed address,string,string,string,string,string,string,string,uint256)
+          handler: handleAdditionalTokenData
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: TokenUpdate(indexed address,indexed address,uint160,uint256,uint128,uint256,uint256,uint256,uint256,uint256,uint256,uint256)
+          handler: handleTokenUpdate
+      file: ./src/main-engine.ts
