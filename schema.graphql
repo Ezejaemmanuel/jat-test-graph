@@ -1,5 +1,50 @@
-type AdditionalTokenData @entity(immutable: true) {
-  id: Bytes!
+# type AdditionalTokenData @entity(immutable: true) {
+#   id: Bytes!
+#   tokenAddress: Bytes! # address
+#   name: String! # string
+#   symbol: String! # string
+#   description: String! # string
+#   imageUrl: String! # string
+#   twitter: String! # string
+#   telegram: String! # string
+#   website: String! # string
+#   timestamp: BigInt! # uint256
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
+
+# type OwnershipTransferred @entity(immutable: true) {
+#   id: Bytes!
+#   previousOwner: Bytes! # address
+#   newOwner: Bytes! # address
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
+
+# type TokenUpdate @entity(immutable: true) {
+#   id: Bytes!
+#   tokenAddress: Bytes! # address
+#   creator: Bytes! # address
+#   sqrtPriceX96: BigInt! # uint160
+#   tokenPrice: BigInt! # uint256
+#   liquidity: BigInt! # uint128
+#   ethReserve: BigInt! # uint256
+#   tokenReserve: BigInt! # uint256
+#   totalSupply: BigInt! # uint256
+#   lockedLiquidityPercentage: BigInt! # uint256
+#   withdrawableLiquidity: BigInt! # uint256
+#   liquidatedLiquidity: BigInt! # uint256
+#   timestamp: BigInt! # uint256
+#   blockNumber: BigInt!
+#   blockTimestamp: BigInt!
+#   transactionHash: Bytes!
+# }
+
+
+type AdditionalTokenData @entity {
+  id: ID!
   tokenAddress: Bytes! # address
   name: String! # string
   symbol: String! # string
@@ -12,6 +57,7 @@ type AdditionalTokenData @entity(immutable: true) {
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
+  tokenUpdates: [TokenUpdate!]! @derivedFrom(field: "additionalTokenData")
 }
 
 type OwnershipTransferred @entity(immutable: true) {
@@ -23,8 +69,8 @@ type OwnershipTransferred @entity(immutable: true) {
   transactionHash: Bytes!
 }
 
-type TokenUpdate @entity(immutable: true) {
-  id: Bytes!
+type TokenUpdate @entity {
+  id: ID!
   tokenAddress: Bytes! # address
   creator: Bytes! # address
   sqrtPriceX96: BigInt! # uint160
@@ -40,4 +86,5 @@ type TokenUpdate @entity(immutable: true) {
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
+  additionalTokenData: AdditionalTokenData!
 }
